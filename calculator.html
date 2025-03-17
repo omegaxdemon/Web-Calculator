@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link rel="shortcut icon" href="cal.png" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <table>
+            <tr>
+                <td colspan="4">
+                    <div id="res"></div>
+                </td>
+            </tr>
+            <tr>
+                <td><button type="button" onclick="input('1')"><div id="keys">1</div></button></td>
+                <td><button type="button" onclick="input('2')"><div id="keys">2</div></button></td>
+                <td><button type="button" onclick="input('3')"><div id="keys">3</div></button></td>
+                <td><button type="button" onclick="input('+')"><div id="keys">+</div></button></td>
+            </tr>
+            <tr>
+                <td><button type="button" onclick="input('4')"><div id="keys">4</div></button></td>
+                <td><button type="button" onclick="input('5')"><div id="keys">5</div></button></td>
+                <td><button type="button" onclick="input('6')"><div id="keys">6</div></button></td>
+                <td><button type="button" onclick="input('-')"><div id="keys">-</div></button></td>
+            </tr>
+            <tr>
+                <td><button type="button" onclick="input('7')"><div id="keys">7</div></button></td>
+                <td><button type="button" onclick="input('8')"><div id="keys">8</div></button></td>
+                <td><button type="button" onclick="input('9')"><div id="keys">9</div></button></td>
+                <td><button type="button" onclick="input('*')"><div id="keys">*</div></button></td>
+            </tr>
+            <tr>
+                <td><button type="button" onclick="document.getElementById('res').innerHTML = ''"><div id="keys">C</div></button></td>
+                <td><button type="button" onclick="input('0')"><div id="keys">0</div></button></td>
+                <td><button type="button" onclick="calculate()"><div id="keys">=</div></button></td>
+                <td><div id="keys"><button type="button" onclick="input('/')">/</button></div></td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        function input(x) {
+            //var x = event.target.innerText;
+            document.getElementById("res").innerHTML += x;
+        }
+        function clear() {
+             document.getElementById("res").innerHTML = '';
+        }
+        function calculate() {
+            var x = document.getElementById("res").innerHTML;
+            var y = eval(x);
+            document.getElementById("res").innerHTML = y;
+            document.getElementById("res").value = " ";
+        }
+        document.addEventListener("keydown", function(event) {
+            let key = event.key;
+
+            // Prevent unwanted default actions (like Enter submitting a form)
+            event.preventDefault();
+
+            // Allow only numbers and operators
+            if (/^[0-9+\-*/]$/.test(key)) {
+                input(key);
+            } else if (key === "Enter") {
+                calculate();
+            } else if (key === "Backspace") {
+                let res = document.getElementById("res");
+                res.innerHTML = res.innerHTML.slice(0, -1);
+            } else if (key === "Escape") {
+                clear();
+            }
+        });
+    </script>
+</body>
+</html>
